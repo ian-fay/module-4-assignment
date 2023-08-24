@@ -4,16 +4,15 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 class Country extends Component {
 
     state = {
-        name: 'United States',
-        gold: 0,
+        name: this.props.name,
+        gold: this.props.gold,
     }
 
-    handleIncrement = () => {
-        console.log(this.state.gold);
-        this.setState({ gold: this.state.gold + 1})
-    }
+    handleIncrement = () => this.setState({ gold: this.state.gold + 1});
+    handleDecrement = () => this.setState({ gold: this.state.gold - 1});
 
-    render() { 
+    render() {
+        console.log(this.props); 
         return (
             <div className="country">
                 <div className="name">
@@ -24,7 +23,12 @@ class Country extends Component {
                     <IconButton size="large" color="success" variant="outlined" onClick={ this.handleIncrement }>
                         <AddCircleIcon/>
                     </IconButton>
+
+                    <IconButton disabled={this.state.gold === 0} size="large" color="success" variant="outlined" onClick={ this.handleDecrement }>
+                        <AddCircleIcon/>
+                    </IconButton>
                 </div>
+                <hr></hr>
             </div>
             );
     }
