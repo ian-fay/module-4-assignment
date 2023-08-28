@@ -1,37 +1,34 @@
 import React, { Component } from 'react';
-import IconButton from '@mui/material/IconButton';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Medal from './Medal';
+
 class Country extends Component {
-
-    state = {
-        name: this.props.name,
-        gold: this.props.gold,
-    }
-
-    handleIncrement = () => this.setState({ gold: this.state.gold + 1});
-    handleDecrement = () => this.setState({ gold: this.state.gold - 1});
-
-    render() {
-        console.log(this.props); 
-        return (
-            <div className="country">
-                <div className="name">
-                    {this.state.name}
-                </div>
-                <div className="gold">
-                    Gold Medals: {this.state.gold}
-                    <IconButton size="large" color="success" variant="outlined" onClick={ this.handleIncrement }>
-                        <AddCircleIcon/>
-                    </IconButton>
-
-                    <IconButton disabled={this.state.gold === 0} size="large" color="success" variant="outlined" onClick={ this.handleDecrement }>
-                        <AddCircleIcon/>
-                    </IconButton>
-                </div>
-                <hr></hr>
-            </div>
-            );
-    }
+  getMedalsTotal(country, medals) {
+    let sum = 0;
+    medals.forEach(medal => { sum += country[medal.name]; });
+    return sum;
+  }
+  render() { 
+    const { country, medals, onIncrement, onDecrement } = this.props;
+    return (
+      <div className="country">
+        <div className="name">
+          { country.name }
+          <span className="badge">
+            { this.getMedalsTotal(country, medals) }
+          </span>
+        </div>
+        { medals.map(medal =>
+          <Medal 
+            key={ medal.id } 
+            country={ country } 
+            medal={ medal } 
+            onIncrement={ onIncrement } 
+            onDecrement={ onDecrement } />
+        ) }
+        <hr />
+      </div>
+    );
+  }
 }
 
 export default Country;
