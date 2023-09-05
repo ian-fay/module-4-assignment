@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+
 
 class Medal extends Component {
     state = { }
@@ -14,7 +16,7 @@ class Medal extends Component {
                     </IconButton>
 
                     <IconButton disabled={country[medal.name] === 0} size="large" color="success" variant="outlined" onClick={ () => onDecrement(country.id, medal.name) }>
-                        <AddCircleIcon/>
+                        <RemoveCircleOutlineIcon/>
                     </IconButton>
             </div>
         );

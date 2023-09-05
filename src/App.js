@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Country from './components/Country';
+import NewCountry from './components/NewCountry';
 
 class App extends Component {
 
@@ -18,6 +19,20 @@ class App extends Component {
       {id: 3, name: 'bronze'},
     ]
 
+  }
+
+  handleAddCountry = (name) => {
+    const { countries } = this.state;
+    const id = countries.length === 0 ? 1 : Math.max(...countries.map(country => country.id)) + 1;
+    const mutableCountries = [...countries].concat({ id: id, name: name, gold: 0, silver: 0, bronze: 0 });
+    this.setState({ countries: mutableCountries });
+  }
+
+
+  handleDeleteCountry = (countryId) => {
+    const { countries } = this.state;
+    const mutableCountries = [...countries].filter(c => c.id !== countryId);
+    this.setState({ countries: mutableCountries })
   }
 
   // handleIncrement = () => this.setState({ gold: this.props.country.gold + 1});
@@ -67,10 +82,12 @@ class App extends Component {
                 key={ country.id } 
                 country={ country } 
                 medals={ this.state.medals }
+                onDelete={ this.handleDeleteCountry}
                 onIncrement={ this.handleIncrement } 
                 onDecrement={ this.handleDecrement } />
             )}
         </div>
+        <NewCountry onAdd={ this.handleAddCountry}></NewCountry>
       </React.Fragment>
     );
   }
